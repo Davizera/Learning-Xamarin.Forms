@@ -12,12 +12,12 @@ namespace TestDrive.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class AgendamentoView : ContentPage
 	{
-		public Veiculo Veiculo { get; set; }
+		public Veiculo Carro { get; set; }
 		public AgendamentoView(Veiculo veiculo)
 		{
 			InitializeComponent();
-			this.Title = $"Agendamento {veiculo.Nome}";
-			this.Veiculo = veiculo;
+			this.Carro = veiculo;
+			this.BindingContext = this;
 		}
 
 		private void Previous_Page(object sender, EventArgs e)

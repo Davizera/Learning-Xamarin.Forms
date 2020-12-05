@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="TestDrive.Views.DetalheView">
+             x:Class="TestDrive.Views.DetalheView"
+						 Title="{Binding Veiculo.Nome, StringFormat='Detalhes do {0}'}">
     <ContentPage.Content>
         <StackLayout>
             <Label Text="{Binding Nome, StringFormat='Detalhes do carro {0}'}"

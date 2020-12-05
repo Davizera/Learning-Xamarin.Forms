@@ -16,8 +16,8 @@ namespace TestDrive.Views
 		public DetalheView(Veiculo veiculo)
 		{
 			InitializeComponent();
-			this.Title = $"Detalhe {veiculo.Nome}";
 			this.Veiculo = veiculo;
+			this.BindingContext = this;
 		}
 
 		private void Next_Page(object sender, EventArgs e)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ namespace TestDrive.Views
 	{
 		public string Nome { get; set; }
 		public decimal Preco { get; set; }
-		public string PrecoFormatado { get { return string.Format("R$ {0}", Preco); }}
+		public string PrecoFormatado { get { return string.Format(Preco.ToString("C", CultureInfo.GetCultureInfo("pt-BR"))); }}
 	}
 	public partial class ListagemView : ContentPage
 	{
