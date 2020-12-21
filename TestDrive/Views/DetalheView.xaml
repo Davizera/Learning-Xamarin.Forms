@@ -3,13 +3,20 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TestDrive.Views.DetalheView"
 						 Title="{Binding Veiculo.Nome, StringFormat='Detalhes do {0}'}">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="{Binding Nome, StringFormat='Detalhes do carro {0}'}"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-			      <Button Text="Próximo"
+	<ContentPage.Content>
+		<StackLayout Padding="25">
+			<TableView Intent="Settings">
+				<TableRoot>
+					<TableSection Title="Acessórios">
+						<SwitchCell Text="{Binding TextoFreioABS}" On="{Binding TemFreioABS, Mode=TwoWay}"></SwitchCell>
+						<SwitchCell Text="{Binding TextoArCondicionado}" On="{Binding TemArCondicionado, Mode=TwoWay}"></SwitchCell>
+						<SwitchCell Text="{Binding TextoMP3Player}" On="{Binding TemMP3Player, Mode=TwoWay}"></SwitchCell>
+						<TextCell Text="{Binding ValorTotal}"></TextCell>
+					</TableSection>
+				</TableRoot>
+			</TableView>
+			<Button Text="Próximo"
 										Clicked="Next_Page"></Button>
-		    </StackLayout>
-    </ContentPage.Content>
+		</StackLayout>
+	</ContentPage.Content>
 </ContentPage>

@@ -2,13 +2,33 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TestDrive.Views.AgendamentoView"
-						 Title="{Binding Carro.Nome}">
+						 Title="{Binding Carro.Nome, StringFormat='Agendamento {0}'}">
 	<ContentPage.Content>
-        <StackLayout>
-            <Label Text="{Binding Nome, StringFormat='Agendamento para o carro: {0}'}"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-			      <Button Clicked="Previous_Page" Text="Previous Page"></Button>
-        </StackLayout>
-    </ContentPage.Content>
+		<StackLayout>
+			<TableView>
+				<TableRoot>
+					<TableSection Title="Seus dados">
+						<EntryCell Label="Nome" Text="{Binding Nome}"></EntryCell>
+						<EntryCell Label="Telefone" Keyboard="Telephone" Text="{Binding Telefone}"></EntryCell>
+						<EntryCell Label="Email" Keyboard="Email" Text="{Binding Email}"></EntryCell>
+					</TableSection>
+					<TableSection Title="Agendamento">
+						<ViewCell>
+							<StackLayout Orientation="Horizontal">
+								<Label Text="Data Agendamento"></Label>
+								<DatePicker Date="{Binding DataAgendamaneto}"></DatePicker>
+							</StackLayout>
+						</ViewCell>
+						<ViewCell>
+							<StackLayout Orientation="Horizontal">
+								<Label Text="Hora Agendamento"></Label>
+								<TimePicker Time="{Binding HoraAgendamento}"></TimePicker>
+							</StackLayout>
+						</ViewCell>
+					</TableSection>
+				</TableRoot>
+			</TableView>
+			<Button Clicked="Agendar" Text="Agendar"></Button>
+		</StackLayout>
+	</ContentPage.Content>
 </ContentPage>
