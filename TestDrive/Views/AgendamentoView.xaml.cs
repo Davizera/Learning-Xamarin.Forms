@@ -1,52 +1,56 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+using TestDrive.Models;
+using TestDrive.ViewModels;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace TestDrive.Views
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class AgendamentoView : ContentPage
-	{
-		public Veiculo Carro { get; set; }
+  {
+    public AgendamentoViewModel AgendamentoVM { get; set; }
 
-		private DateTime _dataAgendamento = DateTime.Today;
-		private TimeSpan _horaAgedamento = DateTime.Now.TimeOfDay;
-		public string Nome { get; set; }
-		public string Telefone { get; set; }
-		public string Email { get; set; }
-		public DateTime DataAgendamento
-		{
-			get { return _dataAgendamento; }
-			set { _dataAgendamento = value; }
-		}
-		public TimeSpan HoraAgendamento
-		{
-			get { return _horaAgedamento; }
-			set { _horaAgedamento = value; }
-		}
-		public AgendamentoView(Veiculo veiculo)
-		{
-			InitializeComponent();
-			this.Carro = veiculo;
-			this.BindingContext = this;
-		}
+    public AgendamentoView(Veiculo veiculo)
+    {
+      InitializeComponent();
+      this.AgendamentoVM = new AgendamentoViewModel(veiculo);
+      this.BindingContext = this.AgendamentoVM;
+    }
 
-		private void Agendar(object sender, EventArgs e)
-		{
-			DisplayAlert("Agendamento",
-				string.Format(
-					@"Você, {0}, está agendando o carro, {1}.
-	Seguem seus dados:
-		Nome: {2},
-		Telefone: {3},
-		Email: {4},
-		Dia Agendamento: {5}
-		Hora Agendamento: {6}", Nome, Carro.Nome, Nome, Telefone, Email, DataAgendamento.ToString("dd/MM/yyyy"), HoraAgendamento.ToString(@"hh\:mm")), "Finalizar");
-		}
-	}
+    protected override void OnAppearing()
+    {
+      base.OnAppearing();
+      MessagingCenter.Subscribe<Agendamento>(this, "Agendamento",
+          async (msg) =>
+          {
+            var confirma = await DisplayAlert("Salvar Agendamento",
+                  "Deseja mesmo enviar o agendamento?",
+                  "Sim", "Não");
+
+            if (confirma)
+            {
+              this.AgendamentoVM.SalvarAgendamento();
+            }
+          });
+
+      MessagingCenter.Subscribe<Agendamento>(this, "SucessoAgendamento",
+          (msg) =>
+          {
+            DisplayAlert("Agendamento", "Agendamento salvo com sucesso!", "Ok");
+          });
+
+      MessagingCenter.Subscribe<Exception>(this, "FalhaAgendamento",
+          (msg) =>
+          {
+            DisplayAlert("Agendamento", "Falha ao agendar o test drive! Verifique os dados e tente novamente mais tarde!", "Ok");
+          });
+    }
+
+    protected override void OnDisappearing()
+    {
+      base.OnDisappearing();
+      MessagingCenter.Unsubscribe<Agendamento>(this, "Agendamento");
+      MessagingCenter.Unsubscribe<Agendamento>(this, "SucessoAgendamento");
+      MessagingCenter.Unsubscribe<Exception>(this, "FalhaAgendamento");
+    }
+  }
 }

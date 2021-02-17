@@ -1,41 +1,46 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using TestDrive.Models;
+using TestDrive.ViewModels;
 using Xamarin.Forms;
 
 namespace TestDrive.Views
 {
-	public class Veiculo
-	{
-		public string Nome { get; set; }
-		public decimal Preco { get; set; }
-		public string PrecoFormatado { get { return string.Format(Preco.ToString("C", CultureInfo.GetCultureInfo("pt-BR"))); }}
-	}
 	public partial class ListagemView : ContentPage
-	{
-		public List<Veiculo> Veiculos { get; set; }
-		public ListagemView()
-		{
-			InitializeComponent();
-			this.Veiculos = new List<Veiculo>
-			{
-				new Veiculo{Nome = "Azera V6", Preco=60000},
-				new Veiculo{Nome = "Fiesta 2.0", Preco=35000},
-				new Veiculo{Nome = "Bmw Monstra", Preco=150000},
-				new Veiculo{Nome = "Uno Mille 2000", Preco=200000}
-			};
-			//ListViewVeiculos.ItemsSource = this.Veiculos;
-			this.BindingContext = this;
-		}
+  {
+    public ListagemViewModel ListagemVM { get; set; }
 
-		private void ListViewVeiculos_ItemTapped(object sender, ItemTappedEventArgs e)
-		{
-			var veiculo = (Veiculo)e.Item;
-			Navigation.PushAsync(new DetalheView(veiculo));
-		}
-	}
+    public ListagemView()
+    {
+      InitializeComponent();
+      this.ListagemVM = new ListagemViewModel();
+      this.BindingContext = this.ListagemVM;
+    }
+
+    protected async override void OnAppearing()
+    {
+      base.OnAppearing();
+      
+      MessagingCenter.Subscribe<Veiculo>(this, "VeiculoSelecionado",
+          (msg) =>
+          {
+            Navigation.PushAsync(new DetalheView(msg));
+          });
+
+      MessagingCenter.Subscribe<Exception>(this, "FalhaListagem",
+          (msg) =>
+          {
+            DisplayAlert("Erro", "Ocorreu um erro ao obter a listagem de veículos. Por favor tente novamente mais tarde.", "Ok");
+          });
+
+      await this.ListagemVM.GetVeiculos();
+    }
+
+    protected override void OnDisappearing()
+    {
+      base.OnDisappearing();
+
+      MessagingCenter.Unsubscribe<Veiculo>(this, "VeiculoSelecionado");
+      MessagingCenter.Unsubscribe<Exception>(this, "FalhaListagem");
+    }
+  }
 }
