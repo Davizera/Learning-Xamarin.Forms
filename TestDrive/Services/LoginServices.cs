@@ -10,7 +10,7 @@ namespace TestDrive.Services
 {
 	public class LoginServices
 	{
-		public async Task FazerLogin(Login login)
+		public async Task<HttpResponseMessage> FazerLogin(Login login)
 		{
 			using (var cliente = new HttpClient())
 			{
@@ -20,13 +20,18 @@ namespace TestDrive.Services
 					new KeyValuePair<string, string>("senha", login.senha)
 				});
 
+				HttpResponseMessage response;
 				cliente.BaseAddress = new Uri("https://aluracar.herokuapp.com");
-				var response = await cliente.PostAsync("/login", form);
+				response = await cliente.PostAsync("/login", form);
+				
+				return response;	
 				if (response.IsSuccessStatusCode)
-					MessagingCenter.Send<Usuario>(new Usuario(), "SucessoLogin");
-				else
-					MessagingCenter.Send<LoginException>(new LoginException("Falha ao tentar efetuar login"), "FalhaLogin");
+						MessagingCenter.Send<Usuario>(new Usuario(), "SucessoLogin");
+					else
+						MessagingCenter.Send<LoginException>(new LoginException("Falha ao tentar efetuar login."), "FalhaLogin");
+					MessagingCenter.Send<LoginException>(new LoginException("Erro de comunicação com o servidor.\nPor favor, verifique sua conexão ou tente novamente mais tarde."), "FalhaLogin");
 			}
+
 		}
 	}
 }

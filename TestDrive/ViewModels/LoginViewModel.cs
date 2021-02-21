@@ -9,7 +9,7 @@ using Xamarin.Forms;
 
 namespace TestDrive.ViewModels
 {
-	public class LoginViewModel :  BaseViewModel
+	public class LoginViewModel : BaseViewModel
 	{
 		private string _usuario;
 
@@ -41,14 +41,26 @@ namespace TestDrive.ViewModels
 		public LoginViewModel()
 		{
 			EntrarCommand = new Command(
-				execute: async() =>
+				execute: async () =>
 				{
-					FazendoLogin = true;
-					var loginServices = new LoginServices();
-					await loginServices.FazerLogin(new Login(_usuario, _senha));
+					try
+					{
+						FazendoLogin = true;
+						var loginServices = new LoginServices();
+						var response = await loginServices.FazerLogin(new Login(_usuario, _senha));
+
+						if (response.IsSuccessStatusCode)
+							MessagingCenter.Send<Usuario>(new Usuario(), "SucessoLogin");
+						else
+							MessagingCenter.Send<LoginException>(new LoginException("Falha ao tentar efetuar login."), "FalhaLogin");
+					}
+					catch (Exception ex)
+					{
+						MessagingCenter.Send<LoginException>(new LoginException("Erro de comunicação com o servidor.\nPor favor, verifique sua conexão ou tente novamente mais tarde."), "FalhaLogin");
+					}
 					FazendoLogin = false;
 				},
-				canExecute: () => 
+				canExecute: () =>
 				{
 					return !string.IsNullOrEmpty(_senha) && !string.IsNullOrEmpty(_usuario);
 				});
