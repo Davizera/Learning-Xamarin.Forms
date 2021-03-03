@@ -18,7 +18,7 @@ namespace TestDrive.Views
 		{
 			InitializeComponent();
 			_usuario = usuario;
-			Master = new MasterDetailViewMaster(usuario);
+			Master = new SideMenuView(usuario);
 		}
 	}
 }

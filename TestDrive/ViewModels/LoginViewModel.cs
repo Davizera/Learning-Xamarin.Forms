@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Windows.Input;
+using Newtonsoft.Json;
 using TestDrive.Models;
 using TestDrive.Services;
 using Xamarin.Forms;
@@ -46,11 +47,14 @@ namespace TestDrive.ViewModels
 					try
 					{
 						FazendoLogin = true;
+
 						var loginServices = new LoginServices();
 						var response = await loginServices.FazerLogin(new Login(_usuario, _senha));
-
 						if (response.IsSuccessStatusCode)
-							MessagingCenter.Send<Usuario>(new Usuario(), "SucessoLogin");
+						{
+							var usuario = JsonConvert.DeserializeAnonymousType(await response.Content.ReadAsStringAsync(), new { Usuario = new Usuario() }).Usuario;
+							MessagingCenter.Send<Usuario>(usuario, "SucessoLogin");
+						}
 						else
 							MessagingCenter.Send<LoginException>(new LoginException("Falha ao tentar efetuar login."), "FalhaLogin");
 					}

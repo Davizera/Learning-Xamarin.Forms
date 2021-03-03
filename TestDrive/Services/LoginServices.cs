@@ -23,13 +23,8 @@ namespace TestDrive.Services
 				HttpResponseMessage response;
 				cliente.BaseAddress = new Uri("https://aluracar.herokuapp.com");
 				response = await cliente.PostAsync("/login", form);
-				
+		
 				return response;	
-				if (response.IsSuccessStatusCode)
-						MessagingCenter.Send<Usuario>(new Usuario(), "SucessoLogin");
-					else
-						MessagingCenter.Send<LoginException>(new LoginException("Falha ao tentar efetuar login."), "FalhaLogin");
-					MessagingCenter.Send<LoginException>(new LoginException("Erro de comunicação com o servidor.\nPor favor, verifique sua conexão ou tente novamente mais tarde."), "FalhaLogin");
 			}
 
 		}
