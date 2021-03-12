@@ -15,6 +15,7 @@
 				 VerticalOptions="CenterAndExpand"
 				 Margin="15">
 				<StackLayout>
+					<Image Source="{Binding foto}"></Image>
 					<Label Text="{Binding Nome}"></Label>
 					<BoxView HeightRequest="1"
 							 HorizontalOptions="Fill"
@@ -34,6 +35,13 @@
 				 VerticalOptions="CenterAndExpand"
 				 Margin="15">
 				<StackLayout>
+					<Image Source="{Binding CaminhoFotoPerfil}"></Image>
+					<Button Text="Tirar Foto"
+									Command="{Binding TirarFoto}"
+									IsVisible="{Binding Editando}"></Button>
+					<Button Text="Escolher foto"
+									Command="{Binding EscolherFoto}"
+									IsVisible="{Binding Editando}"></Button>
 					<TableView Intent="Form">
 						<TableRoot>
 							<TableSection Title="Dados Pessoas">

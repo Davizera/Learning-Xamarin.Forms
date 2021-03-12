@@ -56,7 +56,13 @@ namespace TestDrive.ViewModels
 				_usuario.Telefone = value;
 			}
 		}
-		
+		private ImageSource foto = "perfil.png";
+		public ImageSource CaminhoFotoPerfil
+		{
+			get { return foto; return _usuario.CaminhoFotoPerfil; }
+			private set { foto = value; }
+		}
+
 		private bool _editando;
 		public bool Editando 
 		{
@@ -74,6 +80,8 @@ namespace TestDrive.ViewModels
 		public ICommand IrParaEditarPerfil { get; private set; }
 		public ICommand EditarPerfil { get; private set; }
 		public ICommand SalvarPerfil { get; private set; }
+		public ICommand TirarFoto { get; private set; }
+		public ICommand EscolherFoto { get; private set; }
 
 		public SideMenuViewModel(Usuario usuario)
 		{
