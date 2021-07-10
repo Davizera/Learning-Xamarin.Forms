@@ -7,7 +7,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDrive.Android", "TestDr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDrive.iOS", "TestDrive.iOS\TestDrive.iOS.csproj", "{EA79FE1A-44FF-4271-8B3C-D38664720641}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDrive", "TestDrive\TestDrive.csproj", "{F93436CC-62A5-4EA5-B75A-E395DE526795}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestDrive", "TestDrive\TestDrive.csproj", "{F93436CC-62A5-4EA5-B75A-E395DE526795}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{156B21E6-4B23-4AFA-81FD-B19F26F4A9AA}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
