@@ -8,6 +8,9 @@ using Xamarin.Forms;
 
 namespace TestDrive.Services
 {
+	//emai: joao@alura.com.br
+	//senha: alura123
+
 	public class LoginServices
 	{
 		public async Task<HttpResponseMessage> FazerLogin(Login login)
