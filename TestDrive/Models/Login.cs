@@ -9,8 +9,8 @@ namespace TestDrive.Models
 
 		public Login(string email, string senha)
 		{
-			this.email = email;
-			this.senha = senha;
+			this.email = "joao@alura.com.br";
+			this.senha = "alura123";
 		}
 	}
 

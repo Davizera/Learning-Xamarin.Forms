@@ -6,11 +6,17 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using TestDrive.Media;
+using TestDrive.Droid;
+using Android.Content;
+using Android.Provider;
+using Xamarin.Forms;
 
+[assembly:Xamarin.Forms.Dependency(typeof(MainActivity))]
 namespace TestDrive.Droid
 {
     [Activity(Label = "TestDrive", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize )]
-    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
+    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity , ICamera
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -29,5 +35,13 @@ namespace TestDrive.Droid
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
-    }
+
+		public void TirarFoto()
+		{
+      Intent intent = new Intent(MediaStore.ActionImageCapture);
+      var activity = Android.App.Application.Context as Activity;
+
+      activity.StartActivityForResult(intent, 0);
+		}
+	}
 }

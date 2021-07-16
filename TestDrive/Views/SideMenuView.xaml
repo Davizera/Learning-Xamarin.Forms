@@ -15,7 +15,7 @@
 				 VerticalOptions="CenterAndExpand"
 				 Margin="15">
 				<StackLayout>
-					<Image Source="{Binding foto}"></Image>
+					<Image Source="{Binding CaminhoFotoPerfil}"></Image>
 					<Label Text="{Binding Nome}"></Label>
 					<BoxView HeightRequest="1"
 							 HorizontalOptions="Fill"
@@ -24,7 +24,7 @@
 					<BoxView HeightRequest="1" 
 							 HorizontalOptions="Fill"
 							 Color="Gray"></BoxView>
-					<Button Text="Perfil" Command="{Binding IrParaEditarPerfil}"></Button>
+					<Button Text="Perfil" Command="{Binding IrParaEditarPerfilCommand}"></Button>
 					<Button Text="Meus agendamentos"></Button>
 					<Button Text="Novo agendamento"></Button>
 				</StackLayout>
@@ -37,10 +37,10 @@
 				<StackLayout>
 					<Image Source="{Binding CaminhoFotoPerfil}"></Image>
 					<Button Text="Tirar Foto"
-									Command="{Binding TirarFoto}"
+									Command="{Binding TirarFotoCommand}"
 									IsVisible="{Binding Editando}"></Button>
 					<Button Text="Escolher foto"
-									Command="{Binding EscolherFoto}"
+									Command="{Binding EscolherFotoCommand}"
 									IsVisible="{Binding Editando}"></Button>
 					<TableView Intent="Form">
 						<TableRoot>
@@ -60,9 +60,11 @@
 							</TableSection>
 						</TableRoot>
 					</TableView>
-					<Button Text="Editar" Command="{Binding EditarPerfil}" 
+					<Button Text="Editar" 
+									Command="{Binding EditarPerfilCommand}" 
 									IsVisible="{Binding Editando, Converter={StaticResource Key=OppositeConverter}}"></Button>
-					<Button Text="Salvar" Command="{Binding SalvarPerfil}" 
+					<Button Text="Salvar" 
+									Command="{Binding SalvarPerfilCommand}" 
 									IsVisible="{Binding Editando}"></Button>
 				</StackLayout>
 			</Frame>

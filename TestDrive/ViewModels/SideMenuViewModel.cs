@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
+using TestDrive.Media;
 using TestDrive.Models;
 using Xamarin.Forms;
 
@@ -59,7 +60,7 @@ namespace TestDrive.ViewModels
 		private ImageSource foto = "perfil.png";
 		public ImageSource CaminhoFotoPerfil
 		{
-			get { return foto; return _usuario.CaminhoFotoPerfil; }
+			get { return _usuario.CaminhoFotoPerfil; }
 			private set { foto = value; }
 		}
 
@@ -77,29 +78,36 @@ namespace TestDrive.ViewModels
 			}
 		}
 
-		public ICommand IrParaEditarPerfil { get; private set; }
-		public ICommand EditarPerfil { get; private set; }
-		public ICommand SalvarPerfil { get; private set; }
-		public ICommand TirarFoto { get; private set; }
-		public ICommand EscolherFoto { get; private set; }
+		public ICommand IrParaEditarPerfilCommand { get; private set; }
+		public ICommand EditarPerfilCommand { get; private set; }
+		public ICommand SalvarPerfilCommand { get; private set; }
+		public ICommand TirarFotoCommand { get; private set; }
+		public ICommand EscolherFotoCommand { get; private set; }
 
 		public SideMenuViewModel(Usuario usuario)
 		{
 			_usuario = usuario;
-			IrParaEditarPerfil = new Command(execute: () => 
+			
+			IrParaEditarPerfilCommand = new Command(execute: () => 
 			{
 				MessagingCenter.Send<Usuario>(_usuario, "EditarPerfil");
 			});
-			EditarPerfil = new Command(execute: () =>
+			
+			EditarPerfilCommand = new Command(execute: () =>
 			{
 				Editando = true;
 			});
-			SalvarPerfil = new Command(execute: () => 
+			
+			SalvarPerfilCommand = new Command(execute: () => 
 			{
 				Editando = false;
 				MessagingCenter.Send<Usuario>(_usuario, "SalvarPerfil");
 			});
-
+			
+			TirarFotoCommand = new Command(execute: () =>
+			{
+				DependencyService.Get<ICamera>().TirarFoto();
+			});
 		}
 	}
 }

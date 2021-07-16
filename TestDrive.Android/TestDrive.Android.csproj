@@ -90,7 +90,9 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\icon.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\perfil.png" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TestDrive\TestDrive.csproj">
       <Project>{B4DEAE4E-7842-41EB-AA63-2919B469B9DB}</Project>
